@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {ProductCard} from "./components/productcard";
+import SlideOver from "./components/sliderover";
 import {Navbar} from "./components/navbar";
 
 const App = () => {
@@ -15,11 +16,16 @@ const App = () => {
         { id: 9, title: 'Produit 9', description: 'Description du produit 9', imageUrl: 'https://source.unsplash.com/random/200x200?product-9' },
         { id: 10, title: 'Produit 10', description: 'Description du produit 10', imageUrl: 'https://source.unsplash.com/random/200x200?product-10' }
     ];
+    const [isSlideOverOpen, setIsSlideOverOpen] = useState(false);
 
+    const toggleSlideOver = () => {
+        setIsSlideOverOpen(!isSlideOverOpen);
+    };
 
     return (
       <div>
-        <Navbar />
+          <Navbar onCartClick={toggleSlideOver} />
+          {isSlideOverOpen && <SlideOver />}
         <div className="container mx-auto p-4">
           <div className="grid grid-cols-3 gap-4">
             {products.map(product => (
