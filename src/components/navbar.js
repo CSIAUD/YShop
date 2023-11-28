@@ -1,4 +1,4 @@
-export const Navbar = ({cart}) => {
+export const Navbar = ({ onCartClick }) => {
     return (
         <nav className="bg-gray-800 text-white p-4">
             <div className="container mx-auto flex justify-between items-center">
@@ -11,6 +11,7 @@ export const Navbar = ({cart}) => {
                         </svg>
                         Panier
                     </button>
+                    <button onClick={onCartClick}>Panier</button>
                 </div>
             </div>
         </nav>
