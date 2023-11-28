@@ -1,34 +1,74 @@
-import React from 'react';
-import {ProductCard} from "./components/productcard";
-import {Navbar} from "./components/navbar";
+import React, { useState, useEffect } from 'react';
+import { ProductCard } from './components/productcard';
+import { Navbar } from './components/navbar';
+import axios from 'axios';
 
 const App = () => {
-    const products = [
-        { id: 1, title: 'Produit 1', description: 'Description du produit 1', imageUrl: 'https://source.unsplash.com/random/200x200?product-1' },
-        { id: 2, title: 'Produit 2', description: 'Description du produit 2', imageUrl: 'https://source.unsplash.com/random/200x200?product-2' },
-        { id: 3, title: 'Produit 3', description: 'Description du produit 3', imageUrl: 'https://source.unsplash.com/random/200x200?product-3' },
-        { id: 4, title: 'Produit 4', description: 'Description du produit 4', imageUrl: 'https://source.unsplash.com/random/200x200?product-4' },
-        { id: 5, title: 'Produit 5', description: 'Description du produit 5', imageUrl: 'https://source.unsplash.com/random/200x200?product-5' },
-        { id: 6, title: 'Produit 6', description: 'Description du produit 6', imageUrl: 'https://source.unsplash.com/random/200x200?product-6' },
-        { id: 7, title: 'Produit 7', description: 'Description du produit 7', imageUrl: 'https://source.unsplash.com/random/200x200?product-7' },
-        { id: 8, title: 'Produit 8', description: 'Description du produit 8', imageUrl: 'https://source.unsplash.com/random/200x200?product-8' },
-        { id: 9, title: 'Produit 9', description: 'Description du produit 9', imageUrl: 'https://source.unsplash.com/random/200x200?product-9' },
-        { id: 10, title: 'Produit 10', description: 'Description du produit 10', imageUrl: 'https://source.unsplash.com/random/200x200?product-10' }
-    ];
+    const [products, setProducts] = useState([]);
+    const [showPopup, setShowPopup] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [cart, setCart] = useState([]);
 
+    function getProducts() {
+        axios
+            .get('http://localhost:8080/api/products')
+            .then((response) => {
+                if (response.status === 200) {
+                    const data = response.data;
+                    console.log(data);
+                    setProducts(data);
+                } else {
+                    console.error('La requête a échoué avec le code de statut:', response.status);
+                }
+            })
+            .catch((error) => {
+                console.error('Une erreur s\'est produite lors de la requête:', error);
+            });
+    }
+
+    const addToCart = () => {
+        if (selectedProduct) {
+            setCart([...cart, selectedProduct]);
+            setShowPopup(false);
+        }
+    };
+
+    const openPopup = (product) => {
+        setSelectedProduct(product);
+        setShowPopup(true);
+    };
+
+    const closePopup = () => {
+        setSelectedProduct(null);
+        setShowPopup(false);
+    };
+
+    useEffect(() => {
+        getProducts();
+    }, []);
 
     return (
-      <div>
-        <Navbar />
-        <div className="container mx-auto p-4">
-          <div className="grid grid-cols-3 gap-4">
-            {products.map(product => (
-                <ProductCard key={product.id} {...product} />
-            ))}
-          </div>
+        <div>
+            <Navbar cart={cart} />
+            <div className="container mx-auto p-4">
+                <div className="grid grid-cols-3 gap-4">
+                    {products.map((product) => (
+                        <ProductCard key={product.id} {...product} onClick={() => openPopup(product)} />
+                    ))}
+                </div>
+            </div>
+
+            {showPopup && (
+                <div className="popup">
+                    <div className="popup-content">
+                        <h2>Êtes-vous sûr de vouloir ajouter ce produit au panier ?</h2>
+                        <button onClick={addToCart}>Ajouter au panier</button>
+                        <button onClick={closePopup}>Annuler</button>
+                    </div>
+                </div>
+            )}
         </div>
-      </div>
-  );
+    );
 };
 
 export default App;
