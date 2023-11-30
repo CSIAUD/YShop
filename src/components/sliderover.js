@@ -11,7 +11,6 @@ export default function SlideOver({cart = [], setCart}) {
 
     }
     function postOrder() {
-        console.log("test")
         const order = {
             products: cart.map((product) => product.id),
         };

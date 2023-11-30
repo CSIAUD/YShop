@@ -51,19 +51,16 @@ const App = () => {
             <Navbar cart={cart} onCartClick={toggleSlideOver} />
             {isSlideOverOpen && <SlideOver cart={cart} setCart={setCart} />}
             {confirmDialog && (
-                <div style={{
-                    position: 'fixed',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    backgroundColor: 'white',
-                    padding: '20px',
-                    zIndex: 1000,
-                    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)'
-                }}>
-                    <p>Êtes-vous sûr de vouloir ajouter ce produit au panier ?</p>
-                    <button onClick={confirmAddToCart} style={{ marginRight: '10px' }}>Oui</button>
-                    <button onClick={() => setConfirmDialog(false)}>Non</button>
+                <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-5 z-50 shadow-lg rounded-lg">
+                    <p className="text-gray-700 text-lg font-medium">Êtes-vous sûr de vouloir ajouter ce produit au panier ?</p>
+                    <div className="flex justify-end space-x-2 mt-4">
+                        <button onClick={confirmAddToCart} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">
+                            Oui
+                        </button>
+                        <button onClick={() => setConfirmDialog(false)} className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-300">
+                            Non
+                        </button>
+                    </div>
                 </div>
             )}
 
