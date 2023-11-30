@@ -1,4 +1,4 @@
-export const Navbar = ({ onCartClick }) => {
+export const Navbar = ({ onCartClick, cart }) => {
     return (
         <nav className="bg-gray-800 text-white p-4">
             <div className="container mx-auto flex justify-between items-center">
@@ -9,6 +9,7 @@ export const Navbar = ({ onCartClick }) => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7h18l-2 13H5L3 7z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 00-8 0" />
                         </svg>
+                        {cart.length > 0 ? cart.length : null }
                         Panier
                     </button>
                 </div>
