@@ -9,7 +9,7 @@ export const Navbar = ({ onCartClick, cart }) => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7h18l-2 13H5L3 7z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 00-8 0" />
                         </svg>
-                        {cart.length > 0 ? cart.length : null }
+                        ({cart.length })
                         Panier
                     </button>
                 </div>
