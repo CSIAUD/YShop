@@ -3,9 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import axios from "axios";
 
-
-
-export default function SlideOver({cart}) {
+export default function SlideOver({cart = [], setCart}) {
     const [open, setOpen] = useState(true)
     function removeFromCart(id) {
         const newCart = cart.filter((product) => product.id !== id);
@@ -28,6 +26,13 @@ export default function SlideOver({cart}) {
             .catch((error) => {
                 console.error('Une erreur s\'est produite lors de la requête:', error);
             });
+    }
+
+    let totalPrice = 0;
+    if (cart.length > 0) {
+        totalPrice = cart.reduce((total, product) => {
+            return total + parseFloat(product.price.replace(" €", ""));
+        }, 0);
     }
 
     return (
@@ -103,11 +108,10 @@ export default function SlideOver({cart}) {
                                         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                                             <div className="flex justify-between text-base font-medium text-gray-900">
                                                 <p>Prix</p>
-                                                <p>262.00 €</p>
+                                                <p>{totalPrice.toFixed(2)} €</p>
                                             </div>
                                             <div className="mt-6">
-                                                <button  className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={() => postOrder(cart.id)}
-                                                >
+                                                <button  className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={() => postOrder(cart.id)}>
                                                     Acheter
                                                 </button>
                                             </div>
