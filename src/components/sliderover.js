@@ -5,22 +5,23 @@ import axios from "axios";
 
 
 
-export default function SlideOver({cart}) {
+export default function SlideOver(cart) {
     const [open, setOpen] = useState(true)
+    const [carts, setCarts] = useState([]);
     function removeFromCart(id) {
-        const newCart = cart.filter((product) => product.id !== id);
-        setCart(newCart);
+        const newCart = carts.filter((product) => product.id !== id);
+        setCarts(newCart);
     }
     function postOrder() {
         const order = {
-            products: cart.map((product) => product.id),
+            products: carts.map((product) => product.id),
         };
         axios
             .post('http://localhost:8080/api/orders', order)
             .then((response) => {
                 if (response.status === 200) {
                     console.log(response.data);
-                    setCart([]);
+                    setCarts([]);
                 } else {
                     console.error('La requête a échoué avec le code de statut:', response.status);
                 }
@@ -59,12 +60,12 @@ export default function SlideOver({cart}) {
                                                 <div className="flow-root">
                                                     <ul role="list" className="-my-6 divide-y divide-gray-200">
 
-                                                        {cart.map((cart) => (
-                                                            <li key={cart.id} className="flex py-6">
+                                                        {carts.map((carts) => (
+                                                            <li key={carts.id} className="flex py-6">
                                                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                                     <img
-                                                                        src={cart.imageSrc}
-                                                                        alt={cart.imageAlt}
+                                                                        src={carts.imageSrc}
+                                                                        alt={carts.imageAlt}
                                                                         className="h-full w-full object-cover object-center"
                                                                     />
                                                                 </div>
@@ -73,20 +74,20 @@ export default function SlideOver({cart}) {
                                                                     <div>
                                                                         <div className="flex justify-between text-base font-medium text-gray-900">
                                                                             <h3>
-                                                                                <a href={cart.href}>{cart.name}</a>
+                                                                                <a href={cart.href}>{carts.name}</a>
                                                                             </h3>
-                                                                            <p className="ml-4">{cart.price}</p>
+                                                                            <p className="ml-4">{carts.price}</p>
                                                                         </div>
-                                                                        <p className="mt-1 text-sm text-gray-500">{cart.color}</p>
+                                                                        <p className="mt-1 text-sm text-gray-500">{carts.color}</p>
                                                                     </div>
                                                                     <div className="flex flex-1 items-end justify-between text-sm">
-                                                                        <p className="text-gray-500">Qty {cart.quantity}</p>
+                                                                        <p className="text-gray-500">Qty {carts.quantity}</p>
 
                                                                         <div className="flex">
                                                                             <button
                                                                                 type="button"
                                                                                 className="font-medium text-indigo-600 hover:text-indigo-500"
-                                                                                onClick={() => removeFromCart(cart.id)}
+                                                                                onClick={() => removeFromCart(carts.id)}
                                                                             >
                                                                                 Remove
                                                                             </button>
@@ -106,7 +107,7 @@ export default function SlideOver({cart}) {
                                                 <p>262.00 €</p>
                                             </div>
                                             <div className="mt-6">
-                                                <button  className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={() => postOrder(cart.id)}
+                                                <button  className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={() => postOrder(carts.id)}
                                                 >
                                                     Acheter
                                                 </button>
