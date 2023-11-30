@@ -11,6 +11,7 @@ export default function SlideOver({cart = [], setCart}) {
 
     }
     function postOrder() {
+        console.log("test")
         const order = {
             products: cart.map((product) => product.id),
         };
@@ -111,7 +112,9 @@ export default function SlideOver({cart = [], setCart}) {
                                                 <p>{totalPrice.toFixed(2)} €</p>
                                             </div>
                                             <div className="mt-6">
-                                                <button  className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={() => postOrder(cart.id)}>
+                                                <button disabled ={cart.length < 1} className={`flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm ${
+                                                    cart.length < 1 ? 'bg-gray-500 hover:bg-gray-500' : 'bg-indigo-600 hover:bg-indigo-700'
+                                                }`} onClick={() => postOrder(cart.id)}>
                                                     Acheter
                                                 </button>
                                             </div>
