@@ -12,12 +12,15 @@ export default function SlideOver({cart = [], setCart}) {
     }
     function postOrder() {
         const order = {
-            products: cart.map((product) => product.id),
+            id: cart.map((product) => product.id),
+            userId: 1,
+            total: totalPrice
         };
         axios
             .post('http://localhost:8080/api/orders', order)
             .then((response) => {
-                if (response.status === 200) {
+                if (response.status === 201) {
+                    console.log("offre postée")
                     setCart([]);
                 } else {
                     console.error('La requête a échoué avec le code de statut:', response.status);
