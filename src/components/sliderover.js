@@ -6,8 +6,9 @@ import axios from "axios";
 export default function SlideOver({cart = [], setCart}) {
     const [open, setOpen] = useState(true)
     function removeFromCart(id) {
-        const newCart = cart.filter((product) => product.id !== id);
-        setCart(newCart);
+       const newCart = cart.filter((product) => product.id !== id);
+         setCart(newCart);
+
     }
     function postOrder() {
         const order = {
@@ -17,7 +18,6 @@ export default function SlideOver({cart = [], setCart}) {
             .post('http://localhost:8080/api/orders', order)
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
                     setCart([]);
                 } else {
                     console.error('La requête a échoué avec le code de statut:', response.status);
