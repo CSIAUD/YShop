@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
@@ -34,7 +34,7 @@ export default function SlideOver({ cart = [], setCart }) {
         if (response.status === 201) {
           setCart([]);
           setShowNotification(true);
-          setTimeout(() => setShowNotification(false), 3000); // La notification disparaît après 3 secondes
+          setTimeout(() => setShowNotification(false), 3000);
         } else {
           console.error('La requête a échoué avec le code de statut:', response.status);
         }
@@ -179,16 +179,10 @@ export default function SlideOver({ cart = [], setCart }) {
                 Voulez-vous vraiment supprimer cet article ?
               </Dialog.Description>
               <div className="mt-4">
-                <button
-                  className="mr-2 bg-red-500 text-white px-4 py-2 rounded"
-                  onClick={confirmRemoveFromCart}
-                >
+                <button className="mr-2 bg-red-500 text-white px-4 py-2 rounded" onClick={confirmRemoveFromCart}>
                   Supprimer
                 </button>
-                <button
-                  className="bg-gray-300 px-4 py-2 rounded"
-                  onClick={() => setShowConfirmDelete(false)}
-                >
+                <button className="bg-gray-300 px-4 py-2 rounded" onClick={() => setShowConfirmDelete(false)}>
                   Annuler
                 </button>
               </div>
