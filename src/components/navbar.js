@@ -1,9 +1,14 @@
+import {Link} from "react-router-dom";
+
 export function Navbar({ onCartClick, cart }) {
   return (
     <nav className="bg-gray-800 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
+        <Link to="/">
         <h1 className="text-lg font-bold">YShop</h1>
+        </Link>
         <div className="flex items-center">
+          <Link className="mr-4"  to="/login">login</Link>
           <button className="flex items-center" onClick={onCartClick}>
             <svg className="h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7h18l-2 13H5L3 7z" />
